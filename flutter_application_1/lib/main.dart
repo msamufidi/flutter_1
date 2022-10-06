@@ -95,13 +95,29 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Spacer(flex: 10),
+            MaterialButton(
+              color: Colors.blue,
+              child: Text(
+                "Reset",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                setState(() {
+                  _counter = 0;
+                });
+              },
+            ),
+            Spacer(flex: 2),
             const Text(
               'You have pushed the button this many times:',
             ),
+            Spacer(flex: 1),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: TextStyle(fontSize: 10.0 + _counter),
             ),
+            Spacer(flex: 10),
           ],
         ),
       ),
@@ -109,7 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
