@@ -20,6 +20,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
   Future<Album>? _futureAlbum;
 
   @override
@@ -48,12 +49,16 @@ class _MyAppState extends State<MyApp> {
       children: <Widget>[
         TextField(
           controller: _controller,
-          decoration: const InputDecoration(hintText: 'Enter Title'),
+          decoration: const InputDecoration(hintText: 'Enter Name'),
+        ),
+        TextField(
+          controller: _controller2,
+          decoration: const InputDecoration(hintText: 'Enter id'),
         ),
         ElevatedButton(
           onPressed: () {
             setState(() {
-              _futureAlbum = createAlbum(_controller.text);
+              _futureAlbum = createAlbum(_controller.text, _controller2.text);
             });
           },
           child: const Text('Create Data'),
@@ -67,7 +72,7 @@ class _MyAppState extends State<MyApp> {
       future: _futureAlbum,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text(snapshot.data!.title);
+          return Text(snapshot.data!.name + " | " + snapshot.data!.id);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }

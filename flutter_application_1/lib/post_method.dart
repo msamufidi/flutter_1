@@ -4,15 +4,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<Album> createAlbum(String title) async {
+Future<Album> createAlbum(String name, String job) async {
   final response = await http.post(
-    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    Uri.parse('https://reqres.in/api/users'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{
-      'title': title,
-    }),
+    body: jsonEncode(<String, String>{'name': name, 'job': job}),
   );
 
   if (response.statusCode == 201) {
@@ -27,15 +25,23 @@ Future<Album> createAlbum(String title) async {
 }
 
 class Album {
-  final int id;
-  final String title;
+  final String name;
+  final String job;
+  final String id;
+  final String createdAt;
 
-  const Album({required this.id, required this.title});
+  const Album(
+      {required this.name,
+      required this.job,
+      required this.id,
+      required this.createdAt});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
+      name: json['name'],
+      job: json['job'],
       id: json['id'],
-      title: json['title'],
+      createdAt: json['createdAt'],
     );
   }
 }
